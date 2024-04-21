@@ -1,5 +1,7 @@
 import 'package:dam_u3_practica1/materia/agregarMateria.dart';
 import 'package:dam_u3_practica1/materia/listarMaterias.dart';
+import 'package:dam_u3_practica1/profesor/agregarProfesor.dart';
+import 'package:dam_u3_practica1/profesor/listarProfesor.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -95,7 +97,7 @@ class _MyAppState extends State<MyApp> {
     switch(_index){
       case 1: return ListView();
       case 2: return TabBarView(children: [agregarMaterias(), listarMaterias()]);
-      case 3: return ListView();
+      case 3: return TabBarView(children: [agregarProfesores(), listarProfesores()]);
       case 4: return ListView();
       default: return ListView();
     }

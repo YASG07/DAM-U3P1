@@ -55,7 +55,7 @@ class DBProfesor {
         "PROFESOR",
         p.toJSON(),
         where: "NPROFESOR=?",
-        whereArgs: [p.NProfesor]
+        whereArgs: [p.NProfesor.toString()]
     );
   }
 }
