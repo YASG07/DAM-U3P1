@@ -1,3 +1,5 @@
+import 'package:dam_u3_practica1/asistencia/agregarAsistencia.dart';
+import 'package:dam_u3_practica1/asistencia/listarAsistencias.dart';
 import 'package:dam_u3_practica1/horario/listarHorario.dart';
 import 'package:dam_u3_practica1/materia/agregarMateria.dart';
 import 'package:dam_u3_practica1/horario/agregarHorario.dart';
@@ -97,7 +99,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget dinamico() {
     switch(_index){
-      case 1: return ListView();
+      case 1: return TabBarView(children: [agregarAsistencia(), listarAsistencias()]);
       case 2: return TabBarView(children: [agregarMaterias(), listarMaterias()]);
       case 3: return TabBarView(children: [agregarProfesores(), listarProfesores()]);
       case 4: return TabBarView(children: [agregarHorarios(), listaHorarios()]);
