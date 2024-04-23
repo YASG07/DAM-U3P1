@@ -36,20 +36,20 @@ class _listaHorariosState extends State<listaHorarios> {
         itemCount: listaHorarios.length,
         itemBuilder: (context, index){
           return ListTile(
-            title: Text(listaHorarios[index].hora),
-            subtitle: Text(listaHorarios[index].edificio),
-            trailing: IconButton(onPressed: (){
-              DBHorario.eliminar(listaHorarios[index].salon);
-              setState(() {
-                cargarHorarios();
-              });
-            }, icon: Icon(Icons.delete)),
-            onTap: (){
-              Hhora.text = listaHorarios[index].hora;
-              Hedificio.text = listaHorarios[index].edificio;
-              Hsalon.text = listaHorarios[index].salon;
-              ventanaActualizar(index);
-            },
+            // title: Text(listaHorarios[index].hora),
+            // subtitle: Text(listaHorarios[index].edificio),
+            // trailing: IconButton(onPressed: (){
+            //   DBHorario.eliminar(listaHorarios[index].salon);
+            //   setState(() {
+            //     cargarHorarios();
+            //   });
+            // }, icon: Icon(Icons.delete)),
+            // onTap: (){
+            //   Hhora.text = listaHorarios[index].hora;
+            //   Hedificio.text = listaHorarios[index].edificio;
+            //   Hsalon.text = listaHorarios[index].salon;
+            //   ventanaActualizar(index);
+            // },
           );
         }
     );

@@ -26,54 +26,65 @@ class _agregarHorariosState extends State<agregarHorarios> {
   String profesorllaveforanea = '';
   String materiallaveforanea = '';
 
-  void iniState(){
+  @override
+  void initState(){
     super.initState();
     cargarListas();
   }
 
   void cargarListas() async{
-    //List<Profesor> lp = await DBProfesor.consultar();
+    List<Profesor> lp = await DBProfesor.consultar();
     List<Materia> lm = await DBMateria.consultar();
     setState(() {
-      //listaProfesor = lp;
+      listaProfesor = lp;
       listaMateria = lm;
+      if (lp.isNotEmpty) {
+        profesorllaveforanea = lp.first.NProfesor;
+      }
+      if (lm.isNotEmpty) {
+        materiallaveforanea = lm.first.NMat;
+      }
     });
-    mensaje("Ya termine");
   }
+
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.all(50),
       children: [
-        // DropdownButtonFormField(
-        //     items: listaProfesor.map((e){
-        //       return DropdownMenuItem(
-        //         value: e.NProfesor,
-        //         child: Text(e.nombre));
-        //     }).toList(),
-        //     onChanged: (valorID){
-        //       setState(() {
-        //         profesorllaveforanea = valorID!;
-        //       });
-        //     },
-        //   decoration: InputDecoration(
-        //     labelText: "Profesor",
-        //     icon: Icon(Icons.person)
-        //   ),
-        // ),
-        // SizedBox(height: 15,),
         DropdownButtonFormField(
-            items: listaMateria.map((e){
-              return DropdownMenuItem(
-                value: e.NMat,
-                child: Text(e.descripcion));
-            }).toList(),
-            onChanged: (valorID){
-              setState(() {
-                profesorllaveforanea = valorID!;
-              });
-            },
+          value: profesorllaveforanea,
+          items: listaProfesor.map((e){
+            return DropdownMenuItem(
+              value: e.NProfesor,
+              child: Text(e.nombre)
+            );
+          }).toList(),
+          onChanged: (valorID){
+            setState(() {
+              profesorllaveforanea = valorID!;
+            });
+          },
+          decoration: InputDecoration(
+            labelText: "Profesor",
+            icon: Icon(Icons.person)
+          ),
+        ),
+        SizedBox(height: 15,),
+        DropdownButtonFormField(
+          value: materiallaveforanea,
+          items: listaMateria.map((e){
+            return DropdownMenuItem(
+              value: e.NMat,
+              child: Text(e.descripcion)
+            );
+          }).toList(),
+          onChanged: (valorID){
+            setState(() {
+              materiallaveforanea = valorID.toString();
+            });
+          },
           decoration: InputDecoration(
             labelText: "Materia:",
             icon: Icon(Icons.book)
@@ -115,12 +126,15 @@ class _agregarHorariosState extends State<agregarHorarios> {
           );
 
           DBHorario.insertar(h).then((value){
+            if (value < 1){
+              mensaje("ERROR!");
+              return;
+            }
             mensaje("SE INSERTO");
             hora.clear();
             edificio.clear();
             salon.clear();
           });
-
         }, child: Text("Capturar"))
       ],
     );

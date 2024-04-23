@@ -15,24 +15,25 @@ class DBHorario {
     return base.delete("HORARIO", where: "HORARIO=?", whereArgs: [n]);
   }
 
-  // CONSULTAR
-  static Future<List<Horario>> consultar() async{
+  static Future<List<Horario>> consultar() async {
     Database base = await Conexion.abrirDB();
-    List<Map<String, dynamic>> r = await base.rawQuery("SELECT NHORARIO, NOMBRE, DESCRIPCION, HORA, EDIFICIO, SALON"
-    "FROM HORARIO"
-    "INNER JOIN PROFESOR ON HORARIO.NPROFESOR = PROFESOR.NPROFESOR"
-    "INNER JOIN MATERIA ON HORARIO.NMAT = MATERIA.NMAT");
+    List<Map<String, dynamic>> r = await base.rawQuery(
+        "SELECT HORARIO.NHORARIO, PROFESOR.NOMBRE AS NOMBRE_PROFESOR, MATERIA.DESCRIPCION, HORARIO.HORA, HORARIO.EDIFICIO, HORARIO.SALON "
+            "FROM HORARIO "
+            "INNER JOIN PROFESOR ON HORARIO.NPROFESOR = PROFESOR.NPROFESOR "
+            "INNER JOIN MATERIA ON HORARIO.NMAT = MATERIA.NMAT");
     return List.generate(r.length, (index) {
-      return Horario(NHorario: r[index]['NHORARIO'],
-          nombre: r[index]['NOMBRE'],
+      return Horario(
+          NHorario: r[index]['NHORARIO'],
+          nombre: r[index]['NOMBRE_PROFESOR'],
           descripcion: r[index]['DESCRIPCION'],
           hora: r[index]['HORA'],
           edificio: r[index]['EDIFICIO'],
           salon: r[index]['SALON']);
-
     });
-
   }
+
+
   // ACTUALIZAR
   static Future<int> actualizar(Horario h) async{
     Database base = await Conexion.abrirDB();

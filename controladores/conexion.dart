@@ -8,7 +8,7 @@ class Conexion {
            onCreate: (db, version){
              return _script(db);
            },
-           version: 1
+           version: 2
        );
      }
   static Future<void> _script(Database db) async{
@@ -18,8 +18,8 @@ class Conexion {
          ")");
      db.execute("CREATE TABLE HORARIO("
          "NHORARIO INTEGER PRIMARY KEY AUTOINCREMENT,"
-         "NPROFESOR TEXT FOREIGN KEY,"
-         "NMAT TEXT FOREIGN KEY,"
+         "NPROFESOR TEXT,"
+         "NMAT TEXT,"
          "HORA TEXT,"
          "EDIFICIO TEXT,"
          "SALON TEXT,"
