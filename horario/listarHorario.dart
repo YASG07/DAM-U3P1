@@ -2,6 +2,11 @@ import 'package:dam_u3_practica1/controladores/horarioDB.dart';
 import 'package:dam_u3_practica1/modelos/horario.dart';
 import 'package:flutter/material.dart';
 
+import '../controladores/materiaDB.dart';
+import '../controladores/profesorDB.dart';
+import '../modelos/materia.dart';
+import '../modelos/profesor.dart';
+
 class listaHorarios extends StatefulWidget {
   const listaHorarios({super.key});
 
@@ -10,9 +15,15 @@ class listaHorarios extends StatefulWidget {
 }
 
 class _listaHorariosState extends State<listaHorarios> {
-  final Hhora = TextEditingController();
-  final Hedificio = TextEditingController();
-  final Hsalon = TextEditingController();
+  final hora = TextEditingController();
+  final edificio = TextEditingController();
+  final salon = TextEditingController();
+
+  List<Profesor> listaProfesor = [];
+  List<Materia> listaMateria = [];
+
+  String profesorllaveforanea = '';
+  String materiallaveforanea = '';
 
   List<Horario> listaHorarios = [];
 
@@ -24,8 +35,18 @@ class _listaHorariosState extends State<listaHorarios> {
 
   void cargarHorarios() async{
     List<Horario> t = await DBHorario.consultar();
+    List<Profesor> lp = await DBProfesor.consultar();
+    List<Materia> lm = await DBMateria.consultar();
     setState(() {
       listaHorarios = t;
+      listaProfesor = lp;
+      listaMateria = lm;
+      if (lp.isNotEmpty) {
+        profesorllaveforanea = lp.first.NProfesor;
+      }
+      if (lm.isNotEmpty) {
+        materiallaveforanea = lm.first.NMat;
+      }
     });
   }
 
@@ -36,26 +57,70 @@ class _listaHorariosState extends State<listaHorarios> {
         itemCount: listaHorarios.length,
         itemBuilder: (context, index){
           return ListTile(
-            // title: Text(listaHorarios[index].hora),
-            // subtitle: Text(listaHorarios[index].edificio),
-            // trailing: IconButton(onPressed: (){
-            //   DBHorario.eliminar(listaHorarios[index].salon);
-            //   setState(() {
-            //     cargarHorarios();
-            //   });
-            // }, icon: Icon(Icons.delete)),
-            // onTap: (){
-            //   Hhora.text = listaHorarios[index].hora;
-            //   Hedificio.text = listaHorarios[index].edificio;
-            //   Hsalon.text = listaHorarios[index].salon;
-            //   ventanaActualizar(index);
-            // },
+            title: Text(listaHorarios[index].nombre),
+            subtitle: Text("${listaHorarios[index].edificio} - ${listaHorarios[index].salon}"),
+            leading: Text(listaHorarios[index].hora),
+            trailing: IconButton(onPressed: (){
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context){
+                    return AlertDialog(
+                      icon: Icon(
+                        Icons.warning,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.redAccent,
+                      title: Text("Cuidado!",
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                      content: Text("Estas seguro que deseas eliminar este elemento",
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: (){
+                              DBHorario.eliminar(listaHorarios[index].NHorario);
+                              setState(() {
+                                cargarHorarios();
+                              });
+                            },
+                            child: Text("Eliminar",
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                            )
+                        ),
+                        TextButton(
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                            child: Text("Cancelar",
+                              style: TextStyle(
+                                  color: Colors.white
+                              ),
+                            )
+                        )
+                      ],
+                    );
+                  }
+              );
+            }, icon: Icon(Icons.delete)),
+            onTap: (){
+              hora.text = listaHorarios[index].hora;
+              edificio.text = listaHorarios[index].edificio;
+              salon.text = listaHorarios[index].salon;
+              ventanaActualizar(index, listaHorarios[index].NHorario);
+            },
           );
         }
     );
   }
 
-  void ventanaActualizar(int index) {
+  void ventanaActualizar(int index, int idactualizar) {
     showModalBottomSheet(
         context: context,
         elevation: 5,
@@ -70,18 +135,65 @@ class _listaHorariosState extends State<listaHorarios> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: Hhora,
+              children: [DropdownButtonFormField(
+                value: profesorllaveforanea,
+                items: listaProfesor.map((e){
+                  return DropdownMenuItem(
+                      value: e.NProfesor,
+                      child: Text(e.nombre)
+                  );
+                }).toList(),
+                onChanged: (valorID){
+                  setState(() {
+                    profesorllaveforanea = valorID!;
+                  });
+                },
+                decoration: InputDecoration(
+                    labelText: "Profesor",
+                    icon: Icon(Icons.person)
+                ),
+              ),
+                SizedBox(height: 15,),
+                DropdownButtonFormField(
+                  value: materiallaveforanea,
+                  items: listaMateria.map((e){
+                    return DropdownMenuItem(
+                        value: e.NMat,
+                        child: Text(e.descripcion)
+                    );
+                  }).toList(),
+                  onChanged: (valorID){
+                    setState(() {
+                      materiallaveforanea = valorID.toString();
+                    });
+                  },
                   decoration: InputDecoration(
-                      labelText: "Hora:"
+                      labelText: "Materia:",
+                      icon: Icon(Icons.book)
                   ),
                 ),
-                SizedBox(height: 30,),
-                TextFormField(
-                  controller: Hedificio,
+                SizedBox(height: 15,),
+                TextField(
+                  controller: hora,
                   decoration: InputDecoration(
-                      labelText: "Edificio:"
+                      labelText: 'Hora:',
+                      icon: Icon(Icons.access_time_filled)
+                  ),
+                ),
+                SizedBox(height: 15,),
+                TextField(
+                  controller: edificio,
+                  decoration: InputDecoration(
+                      labelText: 'Edificio:',
+                      icon: Icon(Icons.factory)
+                  ),
+                ),
+                SizedBox(height: 15,),
+                TextField(
+                  controller: salon,
+                  decoration: InputDecoration(
+                      labelText: 'Salon:',
+                      icon: Icon(Icons.school)
                   ),
                 ),
                 SizedBox(height: 30,),
@@ -91,13 +203,13 @@ class _listaHorariosState extends State<listaHorarios> {
                     ElevatedButton(onPressed: (){
                       Horario h = Horario(
                           NHorario: -1,
-                          nombre: "",
-                          descripcion: "",
-                          hora:Hhora.text ,
-                          edificio: Hedificio.text,
-                          salon: Hsalon.text
+                          nombre: profesorllaveforanea,
+                          descripcion: materiallaveforanea,
+                          hora: hora.text,
+                          edificio: edificio.text,
+                          salon: salon.text
                       );
-                      DBHorario.actualizar(h);
+                      DBHorario.actualizar(h, idactualizar);
                       setState(() {
                         cargarHorarios();
                       });

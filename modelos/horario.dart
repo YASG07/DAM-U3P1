@@ -17,7 +17,6 @@ class Horario {
 
   Map<String, dynamic> toJSON(){
     return{
-      "nhorario" : NHorario,
       "nprofesor" : nombre,
       "nmat" : descripcion,
       "hora" : hora,

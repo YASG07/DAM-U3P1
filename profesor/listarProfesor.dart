@@ -40,10 +40,53 @@ class _listarProfesoresState extends State<listarProfesores> {
             title: Text(listaProfesores[index].nombre),
             subtitle: Text(listaProfesores[index].carrera),
             trailing: IconButton(onPressed: (){
-              DBProfesor.eliminar(listaProfesores[index].NProfesor);
-              setState(() {
-                cargarMaterias();
-              });
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context){
+                    return AlertDialog(
+                      icon: Icon(
+                        Icons.warning,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.redAccent,
+                      title: Text("Cuidado!",
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                      content: Text("Estas seguro que deseas eliminar este elemento (${listaProfesores[index].nombre} - ${listaProfesores[index].carrera})",
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: (){
+                              DBProfesor.eliminar(listaProfesores[index].NProfesor);
+                              setState(() {
+                                cargarMaterias();
+                              });
+                            },
+                            child: Text("Eliminar",
+                              style: TextStyle(
+                                  color: Colors.white
+                              ),
+                            )
+                        ),
+                        TextButton(
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                            child: Text("Cancelar",
+                              style: TextStyle(
+                                  color: Colors.white
+                              ),
+                            )
+                        )
+                      ],
+                    );
+                  }
+              );
             }, icon: Icon(Icons.delete)),
             onTap: (){
               nprofesorController.text = listaProfesores[index].NProfesor;

@@ -10,9 +10,9 @@ class DBHorario {
   }
 
   // ELIMINAR
-  static Future<int> eliminar(String n) async{
+  static Future<int> eliminar(int n) async{
     Database base = await Conexion.abrirDB();
-    return base.delete("HORARIO", where: "HORARIO=?", whereArgs: [n]);
+    return base.delete("HORARIO", where: "NHORARIO=?", whereArgs: [n]);
   }
 
   static Future<List<Horario>> consultar() async {
@@ -35,14 +35,14 @@ class DBHorario {
 
 
   // ACTUALIZAR
-  static Future<int> actualizar(Horario h) async{
+  static Future<int> actualizar(Horario h, int ac) async{
     Database base = await Conexion.abrirDB();
 
     return base.update(
         "HORARIO",
         h.toJSON(),
         where: "NHORARIO=?",
-        whereArgs: [h.NHorario]
+        whereArgs: [ac]
     );
   }
 
