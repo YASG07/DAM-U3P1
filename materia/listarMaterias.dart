@@ -71,11 +71,6 @@ class _listarMateriasState extends State<listarMaterias> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  controller: nmatController,
-                  decoration: InputDecoration(labelText: 'Nuevo nombre:'),
-                ),
-                SizedBox(height: 10),
-                TextField(
                   controller: descripcionController,
                   decoration: InputDecoration(labelText: 'Nueva descripción:'),
                 ),

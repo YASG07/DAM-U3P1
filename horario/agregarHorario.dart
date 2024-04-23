@@ -15,11 +15,14 @@ class agregarHorarios extends StatefulWidget {
 }
 
 class _agregarHorariosState extends State<agregarHorarios> {
+
   final hora = TextEditingController();
   final edificio = TextEditingController();
   final salon = TextEditingController();
+
   List<Profesor> listaProfesor = [];
   List<Materia> listaMateria = [];
+
   String profesorllaveforanea = '';
   String materiallaveforanea = '';
 
@@ -29,12 +32,13 @@ class _agregarHorariosState extends State<agregarHorarios> {
   }
 
   void cargarListas() async{
-    List<Profesor> la = await DBProfesor.consultar();
-    List<Materia> lac = await DBMateria.consultar();
+    //List<Profesor> lp = await DBProfesor.consultar();
+    List<Materia> lm = await DBMateria.consultar();
     setState(() {
-      listaProfesor = la;
-      listaMateria = lac;
+      //listaProfesor = lp;
+      listaMateria = lm;
     });
+    mensaje("Ya termine");
   }
 
   @override
@@ -42,19 +46,23 @@ class _agregarHorariosState extends State<agregarHorarios> {
     return ListView(
       padding: EdgeInsets.all(50),
       children: [
-        DropdownButtonFormField(
-            items: listaProfesor.map((e){
-              return DropdownMenuItem(
-                value: e.NProfesor,
-                child: Text(e.nombre));
-            }).toList(),
-            onChanged: (valorID){
-              setState(() {
-                profesorllaveforanea = valorID!;
-              });
-            }
-        ),
-        SizedBox(height: 15,),
+        // DropdownButtonFormField(
+        //     items: listaProfesor.map((e){
+        //       return DropdownMenuItem(
+        //         value: e.NProfesor,
+        //         child: Text(e.nombre));
+        //     }).toList(),
+        //     onChanged: (valorID){
+        //       setState(() {
+        //         profesorllaveforanea = valorID!;
+        //       });
+        //     },
+        //   decoration: InputDecoration(
+        //     labelText: "Profesor",
+        //     icon: Icon(Icons.person)
+        //   ),
+        // ),
+        // SizedBox(height: 15,),
         DropdownButtonFormField(
             items: listaMateria.map((e){
               return DropdownMenuItem(
@@ -65,22 +73,35 @@ class _agregarHorariosState extends State<agregarHorarios> {
               setState(() {
                 profesorllaveforanea = valorID!;
               });
-            }
+            },
+          decoration: InputDecoration(
+            labelText: "Materia:",
+            icon: Icon(Icons.book)
+          ),
         ),
         SizedBox(height: 15,),
         TextField(
           controller: hora,
-          decoration: InputDecoration(labelText: 'HORA:'),
+          decoration: InputDecoration(
+            labelText: 'Hora:',
+            icon: Icon(Icons.access_time_filled)
+          ),
         ),
         SizedBox(height: 15,),
         TextField(
           controller: edificio,
-          decoration: InputDecoration(labelText: 'EDIFICIO:'),
+          decoration: InputDecoration(
+            labelText: 'Edificio:',
+            icon: Icon(Icons.factory)
+          ),
         ),
         SizedBox(height: 15,),
         TextField(
           controller: salon,
-          decoration: InputDecoration(labelText: 'SALON:'),
+          decoration: InputDecoration(
+            labelText: 'Salon:',
+            icon: Icon(Icons.school)
+          ),
         ),
         SizedBox(height: 15,),
         ElevatedButton(onPressed: (){
@@ -90,7 +111,9 @@ class _agregarHorariosState extends State<agregarHorarios> {
               descripcion: materiallaveforanea,
               hora: hora.text,
               edificio: edificio.text,
-              salon: salon.text);
+              salon: salon.text
+          );
+
           DBHorario.insertar(h).then((value){
             mensaje("SE INSERTO");
             hora.clear();
