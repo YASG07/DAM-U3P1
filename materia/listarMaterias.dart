@@ -65,7 +65,7 @@ class _listarMateriasState extends State<listarMaterias> {
               top: 15,
               left: 40,
               right: 40,
-              bottom: MediaQuery.of(context).viewInsets.bottom+200,
+              bottom: MediaQuery.of(context).viewInsets.bottom+300,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

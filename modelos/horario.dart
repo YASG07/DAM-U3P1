@@ -1,15 +1,15 @@
 class Horario {
   int NHorario;
-  String NProfesor;
-  String NMat;
+  String nombre;
+  String descripcion;
   String hora;
   String edificio;
   String salon;
 
   Horario({
     required this.NHorario,
-    required this.NProfesor,
-    required this.NMat,
+    required this.nombre,
+    required this.descripcion,
     required this.hora,
     required this.edificio,
     required this.salon,
@@ -18,8 +18,8 @@ class Horario {
   Map<String, dynamic> toJSON(){
     return{
       "nhorario" : NHorario,
-      "nprofesor" : NProfesor,
-      "nmat" : NMat,
+      "nprofesor" : nombre,
+      "nmat" : descripcion,
       "hora" : hora,
       "edificio" : edificio,
       "salon" : salon

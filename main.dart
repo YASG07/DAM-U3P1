@@ -1,4 +1,6 @@
+import 'package:dam_u3_practica1/horario/listarHorario.dart';
 import 'package:dam_u3_practica1/materia/agregarMateria.dart';
+import 'package:dam_u3_practica1/horario/agregarHorario.dart';
 import 'package:dam_u3_practica1/materia/listarMaterias.dart';
 import 'package:dam_u3_practica1/profesor/agregarProfesor.dart';
 import 'package:dam_u3_practica1/profesor/listarProfesor.dart';
@@ -98,7 +100,7 @@ class _MyAppState extends State<MyApp> {
       case 1: return ListView();
       case 2: return TabBarView(children: [agregarMaterias(), listarMaterias()]);
       case 3: return TabBarView(children: [agregarProfesores(), listarProfesores()]);
-      case 4: return ListView();
+      case 4: return TabBarView(children: [agregarHorarios(), listaHorarios()]);
       default: return ListView();
     }
   }

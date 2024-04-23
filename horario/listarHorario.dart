@@ -1,32 +1,31 @@
-import 'package:dam_u3_practica1/controladores/profesorDB.dart';
-import 'package:dam_u3_practica1/modelos/profesor.dart';
+import 'package:dam_u3_practica1/controladores/horarioDB.dart';
+import 'package:dam_u3_practica1/modelos/horario.dart';
 import 'package:flutter/material.dart';
 
-class listarProfesores extends StatefulWidget {
-  const listarProfesores({super.key});
+class listaHorarios extends StatefulWidget {
+  const listaHorarios({super.key});
 
   @override
-  State<listarProfesores> createState() => _listarProfesoresState();
+  State<listaHorarios> createState() => _listaHorariosState();
 }
 
-class _listarProfesoresState extends State<listarProfesores> {
-  final nprofesorController = TextEditingController();
-  final nombreController = TextEditingController();
-  final carreraController = TextEditingController();
+class _listaHorariosState extends State<listaHorarios> {
+  final Hhora = TextEditingController();
+  final Hedificio = TextEditingController();
+  final Hsalon = TextEditingController();
 
-  List<Profesor> listaProfesores = [];
+  List<Horario> listaHorarios = [];
 
-  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    cargarMaterias();
+    cargarHorarios();
   }
 
-  void cargarMaterias() async{
-    List<Profesor> t = await DBProfesor.consultar();
+  void cargarHorarios() async{
+    List<Horario> t = await DBHorario.consultar();
     setState(() {
-      listaProfesores = t;
+      listaHorarios = t;
     });
   }
 
@@ -34,22 +33,22 @@ class _listarProfesoresState extends State<listarProfesores> {
   Widget build(BuildContext context) {
     return ListView.builder(
         padding: EdgeInsets.all(15),
-        itemCount: listaProfesores.length,
+        itemCount: listaHorarios.length,
         itemBuilder: (context, index){
           return ListTile(
-            title: Text(listaProfesores[index].nombre),
-            subtitle: Text(listaProfesores[index].carrera),
+            title: Text(listaHorarios[index].hora),
+            subtitle: Text(listaHorarios[index].edificio),
             trailing: IconButton(onPressed: (){
-              DBProfesor.eliminar(listaProfesores[index].NProfesor);
+              DBHorario.eliminar(listaHorarios[index].salon);
               setState(() {
-                cargarMaterias();
+                cargarHorarios();
               });
             }, icon: Icon(Icons.delete)),
             onTap: (){
-              nprofesorController.text = listaProfesores[index].NProfesor;
-              nombreController.text = listaProfesores[index].nombre;
-              carreraController.text = listaProfesores[index].carrera;
-             ventanaActualizar(index);
+              Hhora.text = listaHorarios[index].hora;
+              Hedificio.text = listaHorarios[index].edificio;
+              Hsalon.text = listaHorarios[index].salon;
+              ventanaActualizar(index);
             },
           );
         }
@@ -73,16 +72,16 @@ class _listarProfesoresState extends State<listarProfesores> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
-                  controller: nombreController,
+                  controller: Hhora,
                   decoration: InputDecoration(
-                      labelText: "Nombre:"
+                      labelText: "Hora:"
                   ),
                 ),
                 SizedBox(height: 30,),
                 TextFormField(
-                  controller: carreraController,
+                  controller: Hedificio,
                   decoration: InputDecoration(
-                      labelText: "Carrera:"
+                      labelText: "Edificio:"
                   ),
                 ),
                 SizedBox(height: 30,),
@@ -90,15 +89,17 @@ class _listarProfesoresState extends State<listarProfesores> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(onPressed: (){
-                      Profesor p = Profesor(
-                          NProfesor: nprofesorController.text,
-                          nombre: nombreController.text,
-                          carrera: carreraController.text
+                      Horario h = Horario(
+                          NHorario: -1,
+                          nombre: "",
+                          descripcion: "",
+                          hora:Hhora.text ,
+                          edificio: Hedificio.text,
+                          salon: Hsalon.text
                       );
-
-                      DBProfesor.actualizar(p);
+                      DBHorario.actualizar(h);
                       setState(() {
-                        cargarMaterias();
+                        cargarHorarios();
                       });
                       Navigator.pop(context);
                     }, child: const Text('Actualizar')),
