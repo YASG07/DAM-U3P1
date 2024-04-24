@@ -28,9 +28,9 @@ class Conexion {
          ")");
      db.execute("CREATE TABLE ASISTENCIA("
          "IDASISTENCIA INTEGER PRIMARY KEY AUTOINCREMENT,"
-         "NHORARIO INTEGER FOREIGN KEY,"
+         "NHORARIO INTEGER,"
          "FECHA TEXT,"
-         "ASISTENCIA BOOLEAN,"
+         "ASISTIO BOOLEAN,"
          "FOREIGN KEY (NHORARIO) REFERENCES HORARIO(NHORARIO)"
          ")");
      db.execute("CREATE TABLE PROFESOR("

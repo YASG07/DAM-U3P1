@@ -22,6 +22,7 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
   void initState(){
     super.initState();
     cargarListas();
+    fecha.text = DateTime.now().toString();//carga la fecha del dispositivo
   }
 
   void cargarListas() async{
@@ -65,6 +66,7 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
               labelText: 'Fecha:',
               icon: Icon(Icons.date_range)
           ),
+          readOnly: true,
         ),
         SizedBox(height: 15,),
         CheckboxListTile(
@@ -80,7 +82,7 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
               idAsistencia: -1, 
               NHorario: horariollaveforanea, 
               fecha: fecha.text, 
-              asistencia: asistenciaBox
+              asistio: asistenciaBox
           );
 
           DBAsistencia.insertar(a).then((value){

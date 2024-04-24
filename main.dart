@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
                 unselectedLabelColor: Colors.black,
                 tabs: [
                   Tab(text: "Agregar", icon: Icon(Icons.add),),
-                  Tab(text: "Consultar", icon: Icon(Icons.list),)
+                  Tab(text: "Listado", icon: Icon(Icons.list),)
                 ]
             ),
           ),
@@ -103,7 +103,9 @@ class _MyAppState extends State<MyApp> {
       case 2: return TabBarView(children: [agregarMaterias(), listarMaterias()]);
       case 3: return TabBarView(children: [agregarProfesores(), listarProfesores()]);
       case 4: return TabBarView(children: [agregarHorarios(), listaHorarios()]);
-      default: return ListView();
+      default: return const Center(
+          child: Text('Por favor! Seleccione una opción del menú lateral.',
+          style: TextStyle(fontSize: 16,),));
     }
   }
 }

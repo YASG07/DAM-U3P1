@@ -2,21 +2,20 @@ class Asistencia {
   int idAsistencia;
   int NHorario;
   String fecha;
-  bool asistencia;
+  bool asistio;
 
   Asistencia({
     required this.idAsistencia,
     required this.NHorario,
     required this.fecha,
-    required this.asistencia
+    required this.asistio
   });
 
   Map<String, dynamic> toJSON(){
     return {
-      "idasistencia" : idAsistencia,
       "nhorario" : NHorario,
       "fecha" : fecha,
-      "asistencia" : asistencia,
+      "asistio" : asistio,
     };
   }
 }

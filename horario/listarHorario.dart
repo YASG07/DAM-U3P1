@@ -1,7 +1,6 @@
 import 'package:dam_u3_practica1/controladores/horarioDB.dart';
 import 'package:dam_u3_practica1/modelos/horario.dart';
 import 'package:flutter/material.dart';
-
 import '../controladores/materiaDB.dart';
 import '../controladores/profesorDB.dart';
 import '../modelos/materia.dart';
@@ -131,7 +130,7 @@ class _listaHorariosState extends State<listaHorarios> {
               top: 15,
               left: 40,
               right: 40,
-              bottom: MediaQuery.of(context).viewInsets.bottom+300,
+              bottom: MediaQuery.of(context).viewInsets.bottom+250,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
