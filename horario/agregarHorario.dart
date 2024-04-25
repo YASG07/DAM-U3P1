@@ -47,7 +47,6 @@ class _agregarHorariosState extends State<agregarHorarios> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -115,27 +114,41 @@ class _agregarHorariosState extends State<agregarHorarios> {
           ),
         ),
         SizedBox(height: 15,),
-        ElevatedButton(onPressed: (){
-          Horario h = Horario(
-              NHorario: -1,
-              nombre: profesorllaveforanea,
-              descripcion: materiallaveforanea,
-              hora: hora.text,
-              edificio: edificio.text,
-              salon: salon.text
-          );
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(onPressed: (){
+              Horario h = Horario(
+                  NHorario: -1,
+                  nombre: profesorllaveforanea,
+                  descripcion: materiallaveforanea,
+                  hora: hora.text,
+                  edificio: edificio.text,
+                  salon: salon.text
+              );
 
-          DBHorario.insertar(h).then((value){
-            if (value < 1){
-              mensaje("ERROR!");
-              return;
-            }
-            mensaje("SE INSERTO");
-            hora.clear();
-            edificio.clear();
-            salon.clear();
-          });
-        }, child: Text("Capturar"))
+              DBHorario.insertar(h).then((value){
+                if (value < 1){
+                  mensaje("ERROR!");
+                  return;
+                }
+                mensaje("SE INSERTO");
+                hora.clear();
+                edificio.clear();
+                salon.clear();
+              });
+            }, child: Text("Capturar")),
+            ElevatedButton(onPressed: (){
+              setState(() {
+                profesorllaveforanea = listaProfesor.first.NProfesor;
+                materiallaveforanea = listaMateria.first.NMat;
+                hora.clear();
+                edificio.clear();
+                salon.clear();
+              });
+            }, child: Text("Limpiar"))
+          ],
+        )
       ],
     );
   }

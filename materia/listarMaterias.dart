@@ -39,53 +39,7 @@ class _listarMateriasState extends State<listarMaterias> {
           title: Text(listaMaterias[index].NMat),
           subtitle: Text(listaMaterias[index].descripcion),
           trailing: IconButton(onPressed: (){
-            showDialog(
-                context: context,
-                builder: (BuildContext context){
-                  return AlertDialog(
-                    icon: Icon(
-                      Icons.warning,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: Colors.redAccent,
-                    title: Text("Cuidado!",
-                      style: TextStyle(
-                          color: Colors.white
-                      ),
-                    ),
-                    content: Text("Estas seguro que deseas eliminar este elemento (${listaMaterias[index].NMat} - ${listaMaterias[index].descripcion})",
-                      style: TextStyle(
-                          color: Colors.white
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                          onPressed: (){
-                            DBMateria.eliminar(listaMaterias[index].NMat);
-                            setState(() {
-                              cargarMaterias();
-                            });
-                          },
-                          child: Text("Eliminar",
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          )
-                      ),
-                      TextButton(
-                          onPressed: (){
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancelar",
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
-                          )
-                      )
-                    ],
-                  );
-                }
-            );
+            botonEliminar(index);
           }, icon: Icon(Icons.delete)),
           onTap: (){
             nmatController.text = listaMaterias[index].NMat;
@@ -94,6 +48,57 @@ class _listarMateriasState extends State<listarMaterias> {
           },
         );
       }
+    );
+  }
+
+  void botonEliminar(int index){
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            icon: Icon(
+              Icons.warning,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.redAccent,
+            title: Text("Cuidado!",
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            ),
+            content: Text("Estas seguro que deseas eliminar este elemento (${listaMaterias[index].NMat} - ${listaMaterias[index].descripcion})",
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    DBMateria.eliminar(listaMaterias[index].NMat);
+                    setState(() {
+                      cargarMaterias();
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text("Eliminar",
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                  )
+              ),
+              TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancelar",
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                  )
+              )
+            ],
+          );
+        }
     );
   }
 

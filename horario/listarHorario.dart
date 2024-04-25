@@ -20,11 +20,10 @@ class _listaHorariosState extends State<listaHorarios> {
 
   List<Profesor> listaProfesor = [];
   List<Materia> listaMateria = [];
+  List<Horario> listaHorarios = [];
 
   String profesorllaveforanea = '';
   String materiallaveforanea = '';
-
-  List<Horario> listaHorarios = [];
 
   void initState() {
     // TODO: implement initState
@@ -56,64 +55,71 @@ class _listaHorariosState extends State<listaHorarios> {
         itemCount: listaHorarios.length,
         itemBuilder: (context, index){
           return ListTile(
-            title: Text(listaHorarios[index].nombre),
+            title: Text("${listaHorarios[index].nombre} - ${listaHorarios[index].descripcion}"),
             subtitle: Text("${listaHorarios[index].edificio} - ${listaHorarios[index].salon}"),
             leading: Text(listaHorarios[index].hora),
             trailing: IconButton(onPressed: (){
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context){
-                    return AlertDialog(
-                      icon: Icon(
-                        Icons.warning,
-                        color: Colors.white,
-                      ),
-                      backgroundColor: Colors.redAccent,
-                      title: Text("Cuidado!",
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
-                      ),
-                      content: Text("Estas seguro que deseas eliminar este elemento",
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                            onPressed: (){
-                              DBHorario.eliminar(listaHorarios[index].NHorario);
-                              setState(() {
-                                cargarHorarios();
-                              });
-                            },
-                            child: Text("Eliminar",
-                              style: TextStyle(
-                                color: Colors.white
-                              ),
-                            )
-                        ),
-                        TextButton(
-                            onPressed: (){
-                              Navigator.pop(context);
-                            },
-                            child: Text("Cancelar",
-                              style: TextStyle(
-                                  color: Colors.white
-                              ),
-                            )
-                        )
-                      ],
-                    );
-                  }
-              );
+              botonEliminar(index);
             }, icon: Icon(Icons.delete)),
             onTap: (){
+              profesorllaveforanea = encontrarProfesor(listaHorarios[index].nombre);
+              materiallaveforanea = encontrarMateria(listaHorarios[index].descripcion);
               hora.text = listaHorarios[index].hora;
               edificio.text = listaHorarios[index].edificio;
               salon.text = listaHorarios[index].salon;
               ventanaActualizar(index, listaHorarios[index].NHorario);
             },
+          );
+        }
+    );
+  }
+
+  void botonEliminar(int index){
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            icon: Icon(
+              Icons.warning,
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.redAccent,
+            title: Text("Cuidado!",
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            ),
+            content: Text("Estas seguro que deseas eliminar este elemento (${listaHorarios[index].nombre} - ${listaHorarios[index].descripcion} - ${listaHorarios[index].hora})",
+              style: TextStyle(
+                  color: Colors.white
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    DBHorario.eliminar(listaHorarios[index].NHorario);
+                    setState(() {
+                      cargarHorarios();
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: Text("Eliminar",
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                  )
+              ),
+              TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text("Cancelar",
+                    style: TextStyle(
+                        color: Colors.white
+                    ),
+                  )
+              )
+            ],
           );
         }
     );
@@ -134,24 +140,25 @@ class _listaHorariosState extends State<listaHorarios> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [DropdownButtonFormField(
-                value: profesorllaveforanea,
-                items: listaProfesor.map((e){
-                  return DropdownMenuItem(
-                      value: e.NProfesor,
-                      child: Text(e.nombre)
-                  );
-                }).toList(),
-                onChanged: (valorID){
-                  setState(() {
-                    profesorllaveforanea = valorID!;
-                  });
-                },
-                decoration: InputDecoration(
-                    labelText: "Profesor",
-                    icon: Icon(Icons.person)
+              children: [
+                DropdownButtonFormField(
+                  value: profesorllaveforanea,
+                  items: listaProfesor.map((e){
+                    return DropdownMenuItem(
+                        value: e.NProfesor,
+                        child: Text(e.nombre)
+                    );
+                  }).toList(),
+                  onChanged: (valorID){
+                    setState(() {
+                      profesorllaveforanea = valorID!;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      labelText: "Profesor",
+                      icon: Icon(Icons.person)
+                  ),
                 ),
-              ),
                 SizedBox(height: 15,),
                 DropdownButtonFormField(
                   value: materiallaveforanea,
@@ -229,5 +236,24 @@ class _listaHorariosState extends State<listaHorarios> {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(s))
     );
+  }
+
+  String encontrarProfesor(String buscar){
+    for (var profesor in listaProfesor) {
+      if (buscar == profesor.nombre) {
+        return profesor.NProfesor;
+      }
+    }
+    return listaProfesor.first.NProfesor;
+  }
+
+  String encontrarMateria(String buscar){
+    for (var materia in listaMateria) {
+      if (buscar == materia.descripcion) {
+        return materia.NMat;
+      }
+    }
+
+    return listaMateria.first.NMat;
   }
 }
