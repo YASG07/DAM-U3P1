@@ -22,7 +22,6 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
   void initState(){
     super.initState();
     cargarListas();
-    fecha.text = DateTime.now().toString();//carga la fecha del dispositivo
   }
 
   void cargarListas() async{
@@ -59,7 +58,6 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
           ),
         ),
         SizedBox(height: 15,),
-        // Creo que es necesario un selector de fecha xdxd
         TextField(
           controller: fecha,
           decoration: InputDecoration(
@@ -67,6 +65,9 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
               icon: Icon(Icons.date_range)
           ),
           readOnly: true,
+          onTap: (){
+            selecionarFecha();
+          },
         ),
         SizedBox(height: 15,),
         CheckboxListTile(
@@ -99,6 +100,21 @@ class _agregarAsistenciaState extends State<agregarAsistencia> {
         }, child: Text("Capturar"))
       ],
     );
+  }
+
+  Future<void> selecionarFecha() async{
+    DateTime? fechaSelecionada = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2020),
+      initialDate: DateTime.now(),
+      lastDate: DateTime.now(),
+    );
+
+    if (fechaSelecionada != null){
+      setState(() {
+        fecha.text = fechaSelecionada.toString().split(" ")[0];
+      });
+    }
   }
 
   void mensaje(String s) {

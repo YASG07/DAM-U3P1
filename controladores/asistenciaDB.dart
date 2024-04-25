@@ -36,9 +36,9 @@ class DBAsistencia {
     });
   }
   // ACTUALIZAR
-  static Future<int> actualizar(Asistencia a) async{
+  static Future<int> actualizar(Asistencia a, int i) async{
     Database base = await Conexion.abrirDB();
     return base.update("ASISTENCIA", a.toJSON(),
-        where: "IDASISTENCIA=?", whereArgs: [a.idAsistencia]);
+        where: "IDASISTENCIA=?", whereArgs: [i]);
   }
 }
