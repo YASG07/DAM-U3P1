@@ -16,6 +16,8 @@
 
 ```bash
 git clone https://github.com/YASG07/DAM-U3P1.git
+rm lib/main.dart
+rmdir lib
 mv DAM-U3P1 lib
 ```
 
