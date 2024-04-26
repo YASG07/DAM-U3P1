@@ -8,6 +8,10 @@ import 'package:dam_u3_practica1/profesor/agregarProfesor.dart';
 import 'package:dam_u3_practica1/profesor/listarProfesor.dart';
 import 'package:flutter/material.dart';
 
+import 'busquedas/busquedaAsistencia.dart';
+import 'busquedas/busquedaMateria.dart';
+import 'busquedas/busquedaProfesor.dart';
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -70,9 +74,35 @@ class _MyAppState extends State<MyApp> {
                 ),
                 SizedBox(height: 40,),
                 itemDrawer(1, Icons.library_add_check, "Asistencias"),
-                itemDrawer(2, Icons.book, "Materias"),
-                itemDrawer(3, Icons.person, "Profesores"),
+                itemDrawer(2, Icons.library_books, "Materias"),
+                itemDrawer(3, Icons.group, "Profesores"),
                 itemDrawer(4, Icons.access_time_filled, "Horarios"),
+                SizedBox(height: 10,),
+                Column(children: [
+                  Text('Buscar por:'),
+                  Divider(thickness: 5, height: 10, color: Colors.black,),
+                ],),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Profesor'),
+                  onTap: (){
+                    showSearch(context: context, delegate: BusquedaProfesor());
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.book),
+                  title: Text('Materia'),
+                  onTap: (){
+                    showSearch(context: context, delegate: BusquedaMateria());
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.check_box),
+                  title: Text('Asistencia'),
+                  onTap: (){
+                    showSearch(context: context, delegate: BusquedaAsistencia());
+                  },
+                ),
               ],
             ),
           ),

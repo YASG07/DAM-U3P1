@@ -35,6 +35,53 @@ class DBAsistencia {
       );
     });
   }
+
+  //consultar por profesor
+  static Future<List<AsistenciaHorario>> consultarPorProfresor(String nombre) async{
+    Database base = await Conexion.abrirDB();
+    List<Map<String, dynamic>> r = await base.query(
+        "ASISTENCIA INNER JOIN HORARIO ON ASISTENCIA.NHORARIO = HORARIO.NHORARIO "
+            "INNER JOIN PROFESOR ON HORARIO.NPROFESOR = PROFESOR.NPROFESOR",
+        columns: ["ASISTENCIA.IDASISTENCIA",
+                  "ASISTENCIA.FECHA",
+                  "ASISTENCIA.ASISTIO",
+                  "HORARIO.HORA",
+                  "PROFESOR.NOMBRE"],
+        where: "PROFESOR.NOMBRE=?", whereArgs: [nombre]);
+    return List.generate(r.length, (index) {
+      return AsistenciaHorario(
+          idAsistencia: r[index]['IDASISTENCIA'],
+          fecha: r[index]['FECHA'],
+          asistio: r[index]['ASISTIO'],
+          hora: r[index]['HORA'],
+          nombre: r[index]['NOMBRE']
+      );
+    });
+  }
+
+  //CONSULTAR por fecha
+  static Future<List<AsistenciaHorario>> consultarPorFecha(String fecha) async{
+    Database base = await Conexion.abrirDB();
+    List<Map<String, dynamic>> r = await base.query(
+        "ASISTENCIA INNER JOIN HORARIO ON ASISTENCIA.NHORARIO = HORARIO.NHORARIO "
+            "INNER JOIN PROFESOR ON HORARIO.NPROFESOR = PROFESOR.NPROFESOR",
+        columns: ["ASISTENCIA.IDASISTENCIA",
+                  "ASISTENCIA.FECHA",
+                  "ASISTENCIA.ASISTIO",
+                  "HORARIO.HORA",
+                  "PROFESOR.NOMBRE"],
+        where: "ASISTENCIA.FECHA=?", whereArgs: [fecha]);
+    return List.generate(r.length, (index) {
+      return AsistenciaHorario(
+          idAsistencia: r[index]['IDASISTENCIA'],
+          fecha: r[index]['FECHA'],
+          asistio: r[index]['ASISTIO'],
+          hora: r[index]['HORA'],
+          nombre: r[index]['NOMBRE']
+      );
+    });
+  }
+
   // ACTUALIZAR
   static Future<int> actualizar(Asistencia a, int i) async{
     Database base = await Conexion.abrirDB();
