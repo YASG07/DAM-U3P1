@@ -5,7 +5,7 @@
 **Integrantes:**
 - *Flores Fabian Isidro Antonio*
 - *Sandoval Garcia Yael Alejandro*
-- *Aqui va el nombre de nancy xdd*
+- *Estrella Rodriguez Nancy Anahi - Mis contribuciones fueron vía archivo comprimido por falta de experiencia en Github*
 
 
 ---
