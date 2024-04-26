@@ -1,5 +1,5 @@
-import 'package:dam_u3_practica1/controladores/materiaDB.dart';
-import 'package:dam_u3_practica1/modelos/materia.dart';
+import '/controladores/materiaDB.dart';
+import '/modelos/materia.dart';
 import 'package:flutter/material.dart';
 
 class agregarMaterias extends StatefulWidget {

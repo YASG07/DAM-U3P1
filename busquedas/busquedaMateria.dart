@@ -1,4 +1,4 @@
-import 'package:dam_u3_practica1/controladores/horarioDB.dart';
+import '../controladores/horarioDB.dart';
 import 'package:flutter/material.dart';
 import '../modelos/horario.dart';
 

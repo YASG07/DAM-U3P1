@@ -1,4 +1,4 @@
-import 'package:dam_u3_practica1/modelos/horario.dart';
+import '/modelos/horario.dart';
 import 'conexion.dart';
 import 'package:sqflite/sqflite.dart';
 

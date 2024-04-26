@@ -1,4 +1,4 @@
-import 'package:dam_u3_practica1/controladores/asistenciaDB.dart';
+import '../controladores/asistenciaDB.dart';
 import 'package:flutter/material.dart';
 import '../modelos/asistenciaHorario.dart';
 

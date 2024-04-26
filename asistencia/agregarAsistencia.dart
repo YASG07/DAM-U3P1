@@ -1,7 +1,7 @@
-import 'package:dam_u3_practica1/controladores/asistenciaDB.dart';
-import 'package:dam_u3_practica1/controladores/horarioDB.dart';
-import 'package:dam_u3_practica1/modelos/asistencia.dart';
-import 'package:dam_u3_practica1/modelos/horario.dart';
+import '../controladores/asistenciaDB.dart';
+import '../controladores/horarioDB.dart';
+import '../modelos/asistencia.dart';
+import '../modelos/horario.dart';
 import 'package:flutter/material.dart';
 
 class agregarAsistencia extends StatefulWidget {

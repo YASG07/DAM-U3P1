@@ -1,11 +1,11 @@
-import 'package:dam_u3_practica1/asistencia/agregarAsistencia.dart';
-import 'package:dam_u3_practica1/asistencia/listarAsistencias.dart';
-import 'package:dam_u3_practica1/horario/listarHorario.dart';
-import 'package:dam_u3_practica1/materia/agregarMateria.dart';
-import 'package:dam_u3_practica1/horario/agregarHorario.dart';
-import 'package:dam_u3_practica1/materia/listarMaterias.dart';
-import 'package:dam_u3_practica1/profesor/agregarProfesor.dart';
-import 'package:dam_u3_practica1/profesor/listarProfesor.dart';
+import './asistencia/agregarAsistencia.dart';
+import './asistencia/listarAsistencias.dart';
+import './horario/listarHorario.dart';
+import './materia/agregarMateria.dart';
+import './horario/agregarHorario.dart';
+import './materia/listarMaterias.dart';
+import './profesor/agregarProfesor.dart';
+import './profesor/listarProfesor.dart';
 import 'package:flutter/material.dart';
 
 import 'busquedas/busquedaAsistencia.dart';

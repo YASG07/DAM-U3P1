@@ -1,10 +1,10 @@
-import 'package:dam_u3_practica1/controladores/horarioDB.dart';
-import 'package:dam_u3_practica1/controladores/materiaDB.dart';
-import 'package:dam_u3_practica1/controladores/profesorDB.dart';
+import '/controladores/horarioDB.dart';
+import '/controladores/materiaDB.dart';
+import '/controladores/profesorDB.dart';
 import 'package:flutter/material.dart';
-import 'package:dam_u3_practica1/modelos/profesor.dart';
-import 'package:dam_u3_practica1/modelos/materia.dart';
-import 'package:dam_u3_practica1/modelos/horario.dart';
+import '/modelos/profesor.dart';
+import '/modelos/materia.dart';
+import '/modelos/horario.dart';
 
 class agregarHorarios extends StatefulWidget {
   const agregarHorarios({super.key});

@@ -1,7 +1,7 @@
-import '../modelos/asistenciaHorario.dart';
+import '/modelos/asistenciaHorario.dart';
 import 'conexion.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:dam_u3_practica1/modelos/asistencia.dart';
+import '/modelos/asistencia.dart';
 
 class DBAsistencia {
   // INSERTAR
@@ -21,6 +21,7 @@ class DBAsistencia {
         "ASISTENCIA INNER JOIN HORARIO ON ASISTENCIA.NHORARIO = HORARIO.NHORARIO "
             "INNER JOIN PROFESOR ON HORARIO.NPROFESOR = PROFESOR.NPROFESOR",
         columns: ["ASISTENCIA.IDASISTENCIA",
+                  "ASISTENCIA.NHORARIO",
                   "ASISTENCIA.FECHA",
                   "ASISTENCIA.ASISTIO",
                   "HORARIO.HORA",
@@ -28,6 +29,7 @@ class DBAsistencia {
     return List.generate(r.length, (index) {
       return AsistenciaHorario(
           idAsistencia: r[index]['IDASISTENCIA'],
+          NHorario: r[index]['NHORARIO'],
           fecha: r[index]['FECHA'],
           asistio: r[index]['ASISTIO'],
           hora: r[index]['HORA'],
@@ -51,6 +53,7 @@ class DBAsistencia {
     return List.generate(r.length, (index) {
       return AsistenciaHorario(
           idAsistencia: r[index]['IDASISTENCIA'],
+          NHorario: r[index]['NHORARIO'],
           fecha: r[index]['FECHA'],
           asistio: r[index]['ASISTIO'],
           hora: r[index]['HORA'],
@@ -74,6 +77,7 @@ class DBAsistencia {
     return List.generate(r.length, (index) {
       return AsistenciaHorario(
           idAsistencia: r[index]['IDASISTENCIA'],
+          NHorario: r[index]['NHORARIO'],
           fecha: r[index]['FECHA'],
           asistio: r[index]['ASISTIO'],
           hora: r[index]['HORA'],

@@ -1,5 +1,5 @@
-import 'package:dam_u3_practica1/controladores/profesorDB.dart';
-import 'package:dam_u3_practica1/modelos/profesor.dart';
+import '/controladores/profesorDB.dart';
+import '/modelos/profesor.dart';
 import 'package:flutter/material.dart';
 
 class listarProfesores extends StatefulWidget {

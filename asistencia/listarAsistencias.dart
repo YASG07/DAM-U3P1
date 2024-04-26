@@ -1,11 +1,7 @@
-import 'package:dam_u3_practica1/controladores/asistenciaDB.dart';
-import 'package:dam_u3_practica1/controladores/horarioDB.dart';
-import 'package:dam_u3_practica1/horario/listarHorario.dart';
+import '../controladores/asistenciaDB.dart';
 import 'package:flutter/material.dart';
-
 import '../modelos/asistencia.dart';
 import '../modelos/asistenciaHorario.dart';
-import '../modelos/horario.dart';
 
 class listarAsistencias extends StatefulWidget {
   const listarAsistencias({super.key});
@@ -19,7 +15,6 @@ class _listarAsistenciasState extends State<listarAsistencias> {
   List<AsistenciaHorario> listaAsistencia = [];
   final fecha = TextEditingController();
   bool asistenciaBox = false;
-  List<Horario> listaHorarios = [];
   int horariollaveforanea = 0;
 
   @override
@@ -31,10 +26,8 @@ class _listarAsistenciasState extends State<listarAsistencias> {
 
   void cargarAsistencias() async{
     List<AsistenciaHorario> la = await DBAsistencia.consultar();
-    List<Horario> lh = await DBHorario.consultar();
     setState(() {
       listaAsistencia = la;
-      listaHorarios = lh;
     });
   }
 
@@ -55,6 +48,7 @@ class _listarAsistenciasState extends State<listarAsistencias> {
             onTap: (){
               asistenciaBox = modalActualizarCheck(listaAsistencia[index].asistio);
               fecha.text = listaAsistencia[index].fecha;
+              horariollaveforanea = listaAsistencia[index].NHorario;
               ventanaActualizar(index, listaAsistencia[index].idAsistencia);
             },
           );
@@ -165,13 +159,19 @@ class _listarAsistenciasState extends State<listarAsistencias> {
                   children: [
                     ElevatedButton(onPressed: (){
                       Asistencia a = Asistencia(
-                          idAsistencia: -1,
+                          idAsistencia: idactualizar,
                           NHorario: horariollaveforanea,
                           fecha: fecha.text,
                           asistio: asistenciaBox
                       );
 
-                      DBAsistencia.actualizar(a,idactualizar);
+                      DBAsistencia.actualizar(a,idactualizar).then((value){
+                        if(value < 1){
+                          mensaje("Error! al actualizar");
+                          return;
+                        }
+                        mensaje("Se actualizo con exito");
+                      });
                       setState(() {
                         cargarAsistencias();
                       });
@@ -201,5 +201,11 @@ class _listarAsistenciasState extends State<listarAsistencias> {
         fecha.text = fechaSelecionada.toString().split(" ")[0];
       });
     }
+  }
+
+  void mensaje(String s) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(s))
+    );
   }
 }
